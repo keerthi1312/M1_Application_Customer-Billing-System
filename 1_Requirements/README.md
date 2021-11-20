@@ -21,22 +21,30 @@ INTRODUCTION:
 SWOT ANALYSIS
 
 Strength          :  Faster billing, Time effective, Easy to update.
+
 Weakness          :  Mismatching of the customer details sometimes it may happen.
+
 Opportunities     :  This project improves the billing process of the customers.
+
 Threat            :  Security issues, Mismatching of the customer details.
 
  4 W's and 1H
  
  Who:
        The billing staff are allocated in the billing process.
+       
  What:
        This projects saves the customer time.
+       
  when:
        This project is useful for customer when they buy the things.
+       
  Where:
        This project us used in supermarkets, cafes, shops etc..
+       
  How:
        When type the phone number it will show all the details about the customer.
+       
        
  DETAIL REQUIREMENTS
  
