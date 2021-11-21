@@ -6,16 +6,22 @@ INTRODUCTION:
   
   It can hold any number of accounts and account can be added at any time.
   
+  
   The programming of simple calculations such as calculation of due amount, balance etc. have been embed in the code of project. 
   
+  
   Easy to searching the account by two ways, either by name of the customer or by the number of customer.
+  
   
   Time Effective and easy to use.
   
   
+  
   COST:
   
+  
   Affordable cost and Nowdays mostly used in many supermarkets, cafes, shops etc..
+  
   
  
  Defining System:
@@ -28,13 +34,17 @@ INTRODUCTION:
 SWOT ANALYSIS
 
 
+
 Strength          :  Faster billing, Time effective, Easy to update.
+
 
 
 Weakness          :  Mismatching of the customer details sometimes it may happen.
 
 
+
 Opportunities     :  This project improves the billing process of the customers.
+
 
 
 Threat            :  Security issues, Mismatching of the customer details.
@@ -43,29 +53,42 @@ Threat            :  Security issues, Mismatching of the customer details.
 
  4 W's and 1H
  
+ 
  Who:
+ 
+ 
        The billing staff are allocated in the billing process.
        
        
  What:
+ 
+ 
        This projects saves the customer time.
        
        
  when:
+ 
+ 
        This project is useful for customer when they buy the things.
        
        
  Where:
+ 
+ 
        This project us used in supermarkets, cafes, shops etc..
        
        
  How:
+ 
+ 
        When type the phone number it will show all the details about the customer.
        
        
        
        
  DETAIL REQUIREMENTS
+ 
+ 
  
  High Level Requirements:
             1. ID          : HLR_01
