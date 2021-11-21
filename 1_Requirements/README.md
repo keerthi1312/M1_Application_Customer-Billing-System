@@ -4,13 +4,21 @@ INTRODUCTION:
     
   FEATURES:
   
+  
+  
   It can hold any number of accounts and account can be added at any time.
+  
+  
   
   
   The programming of simple calculations such as calculation of due amount, balance etc. have been embed in the code of project. 
   
   
+  
+  
   Easy to searching the account by two ways, either by name of the customer or by the number of customer.
+  
+  
   
   
   Time Effective and easy to use.
@@ -20,7 +28,11 @@ INTRODUCTION:
   COST:
   
   
+  
+  
   Affordable cost and Nowdays mostly used in many supermarkets, cafes, shops etc..
+  
+  
   
   
  
@@ -35,7 +47,11 @@ SWOT ANALYSIS
 
 
 
+
+
 Strength          :  Faster billing, Time effective, Easy to update.
+
+
 
 
 
@@ -43,11 +59,17 @@ Weakness          :  Mismatching of the customer details sometimes it may happen
 
 
 
+
+
 Opportunities     :  This project improves the billing process of the customers.
 
 
 
+
+
 Threat            :  Security issues, Mismatching of the customer details.
+
+
 
 
 
