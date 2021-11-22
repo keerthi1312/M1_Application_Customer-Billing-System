@@ -113,6 +113,7 @@ Threat            :  Security issues, Mismatching of the customer details.
  
  
  High Level Requirements:
+ 
             1. ID          : HLR_01
             
                DESCRIPTION : Visual Studio code platform.
@@ -125,11 +126,7 @@ Threat            :  Security issues, Mismatching of the customer details.
                
                PLATFORM    : Software.
                
-            3. ID          : HLR_03
             
-               DESCRIPTION : Microcontroller
-               
-               PLATFORM    : Software C
                
 Low Level Requirements:
           
