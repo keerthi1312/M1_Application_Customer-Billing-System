@@ -3,4 +3,3 @@
 [![Code Quality - Static Code - Cppcheck](https://github.com/keerthi1312/M1_Application_Customer-Billing-System/actions/workflows/cppcheck.yml/badge.svg)](https://github.com/keerthi1312/M1_Application_Customer-Billing-System/actions/workflows/cppcheck.yml)
 
 [![Code Quality - Static Code - Cppcheck](https://github.com/keerthi1312/M1_Application_Customer-Billing-System/actions/workflows/cppcheck.yml/badge.svg)](https://github.com/keerthi1312/M1_Application_Customer-Billing-System/actions/workflows/cppcheck.yml)
-[![Unit Testing - Unity](https://github.com/keerthi1312/M1_Application_Customer-Billing-System/actions/workflows/unity.yml/badge.svg)](https://github.com/keerthi1312/M1_Application_Customer-Billing-System/actions/workflows/unity.yml)
