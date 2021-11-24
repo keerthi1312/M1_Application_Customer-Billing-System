@@ -49,7 +49,7 @@ int main()
 
 	  do{
 	       printf("\nPlease Provide an Input\n(DONT'T Press Enter Here): ");
-	       ch = getche();													//function to take input without pressing enter
+	       ch = getche();													
 	  }while(ch <= '0' || ch > '4');
 
 	  switch(ch){
@@ -100,18 +100,18 @@ int main()
    void input()
 	{
 	  FILE *fp = fopen("cbs.dat", "r+");
-	  fseek (fp, 0, SEEK_END);				//move file pointer at the last position of file
-	  tl = ftell(fp);						//fetch the location of pointer
-	  sl = sizeof(customer);				//fetch the size of structure
-	  ts = tl / sl;							//fetch the number of customer currently stored in database
-	  fseek(fp, (ts-1)*sl, SEEK_SET);		//sets the pointer to the last entry
-	  fread(&customer, sl, 1, fp);			//reads info from the database file
+	  fseek (fp, 0, SEEK_END);				
+	  tl = ftell(fp);						
+	  sl = sizeof(customer);				
+	  ts = tl / sl;							
+	  fseek(fp, (ts-1)*sl, SEEK_SET);		
+	  fread(&customer, sl, 1, fp);			
 
 	  printf("\nCustomer no:%d\n", ++customer.number);
 	  fclose(fp);
 	  printf("Account number: %d", customer.number);
 	  customer.acc_no = customer.number;
-	  fflush(stdin);						//empty the buffer
+	  fflush(stdin);						
 
 	  printf("\n       Name: ");
 	  gets(customer.name);
@@ -136,7 +136,7 @@ int main()
 					fflush(stdin);
 				printf("\n         Purchase date(dd/mm/yyyy): ");
 				scanf("%d/%d/%d", &customer.lastpayment.day, &customer.lastpayment.month, &customer.lastpayment.year);
-							customer.newbal = customer.newbal + customer.payment;			//Updates Balance
+							customer.newbal = customer.newbal + customer.payment;			
 				}
 				else if(key==2){
 					fflush(stdin);
@@ -160,14 +160,14 @@ int main()
    {
 	  int c;
 	  FILE *fp;
-	  fp = fopen("cbs.dat", "ab");						//opens file in append mode
-	  fflush(stdin);									//empty the buffer
-	  c = fwrite(&customer, sizeof(customer), 1, fp);	//updates file & checks for returned value
+	  fp = fopen("cbs.dat", "ab");						
+	  fflush(stdin);									
+	  c = fwrite(&customer, sizeof(customer), 1, fp);	
 				  			if(c == 1)
 				  			puts("\tRecord Update SUCCEESSFULLY");
 				  			else
 				  			puts("\tRecord Update FAILED");
-	  fclose(fp);										//closes the file
+	  fclose(fp);										
 
 	  return;
    }
@@ -178,7 +178,7 @@ void search()
 	 char nam[100];
 	 int n, i, m = 1;
 	 FILE *fp;
-	 fp = fopen("cbs.dat", "rb");						//open file in read binary mode
+	 fp = fopen("cbs.dat", "rb");						
 
 	 do{
 		printf("\nEnter your choice: ");
@@ -188,7 +188,7 @@ void search()
 	 switch(ch){
 
 	      case '1':
-		    fseek(fp, 0, SEEK_END);					//sets pointer to the end of file
+		    fseek(fp, 0, SEEK_END);					
 		    tl = ftell(fp);
 		    sl = sizeof(customer);
 		    ts = tl / sl;
@@ -198,8 +198,8 @@ void search()
 			if(n <= 0 || n > ts)
 			printf("\nOpps!!! No Result Found\n");
 			else{
-			    fseek(fp, (n-1)*sl, SEEK_SET);		//sets pointer to the inputted customer account
-			    fread(&customer, sl, 1, fp);		//reads the data from file
+			    fseek(fp, (n-1)*sl, SEEK_SET);		
+			    fread(&customer, sl, 1, fp);		
 			    display();
 			}
 			printf("\n\nDo You Wish To Search Again?(y/n) ");
@@ -227,7 +227,7 @@ void search()
 			     if(strcmp(customer.name, nam) == 0)
 			     {
 				display();
-				m = 0;									//m=o, user found m!=0, user not found
+				m = 0;									
 				break;
 			     }
 			}
@@ -246,8 +246,8 @@ void update()
 {
 	char ch;
 	int n, c;
-	FILE *fp = fopen("cbs.dat", "rb+");				//opens file in read+ binary mode
-	  fseek (fp, 0, SEEK_END);						//sets pointer to the end
+	FILE *fp = fopen("cbs.dat", "rb+");				
+	  fseek (fp, 0, SEEK_END);						
 	  tl = ftell(fp);
 	  sl = sizeof(customer);
 	  ts = tl / sl;
@@ -256,7 +256,7 @@ void update()
 			printf("\nEnter customer number: ");
 			fflush(stdin);
 			scanf("%d", &n);
-			if(ts<1){								//condition to check if database have some data
+			if(ts<1){								
 			puts("Database Empty\nAdd Customer First.");
 			main();
 		}
@@ -269,7 +269,7 @@ void update()
 			else if(ts=0)
 			puts("Record is Empty!");
 			else{
-			    fseek(fp, (n-1)*sl, SEEK_SET);		//sets pointer to the start of desired data
+			    fseek(fp, (n-1)*sl, SEEK_SET);		
 			    fread(&customer, sl, 1, fp);
 			    printf("\tName:	%s\n", customer.name);
 			    printf("\tPrevious Due Balance: %.2f\n", customer.newbal);
@@ -284,7 +284,7 @@ void update()
 					fflush(stdin);
 				printf("\n         Purchase date(dd/mm/yyyy): ");
 				scanf("%d/%d/%d", &customer.lastpayment.day, &customer.lastpayment.month, &customer.lastpayment.year);
-							customer.newbal = customer.newbal + customer.payment;			//Updates Balance
+							customer.newbal = customer.newbal + customer.payment;			
 				}
 				else if(key==2){
 					fflush(stdin);
