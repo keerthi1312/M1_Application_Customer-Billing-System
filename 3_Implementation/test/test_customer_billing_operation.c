@@ -1,197 +1,328 @@
- #include<stdio.h>
- #include<conio.h>
- #include<stdlib.h>
- void input();
- void writefile();
- void search();
- void output();
+#include<stdio.h>		
+#include<stdlib.h>
+#include<windows.h>
+#include<string.h>		
 
-void main()
+void input();	
+void writefile();	
+void search();		
+void display();		
+void update();		
+
+/* Structue for payment data */
+struct date {
+	   int month;
+	   int day;
+	   int year;
+	   };
+
+/* Structure holding details of customer*/
+struct account {
+	int number;
+	char name[100];
+	int acc_no;
+	float mobile_no;
+	char street[100];
+	char city[100];
+	char acct_type;
+	float newbal;
+	float payment;
+	struct date lastpayment;
+
+	}customer;
+
+int tl, sl, ts;			
+
+int main()
 	{
-	  int i,n;
+	  int i, n;
 	  char ch;
-	  clrscr();
+	  fflush(stdin);		//empty the buffer
+	  printf("\n\n    CUSTOMER BILLING SYSTEM:");
+	  puts("\n-----------------------------\n");
+	  printf(" ===============================\n");
+	  printf("| 1-> Add Account in List       |\n");
+	  printf("| 2-> Search Customer Account   |\n");
+	  printf("| 3-> Update Payment Details    |\n");
+	  printf("| 4-> Exit                      |");
+	  printf("\n ===============================\n");
 
-	  _setcursortype(_NOCURSOR);
-	  printf("   CUSTOMER BILLING SYSTEM:\n\n");
-	  printf("===============================\n");
-	  printf("\n1:    to add account on list\n");
-	  printf("2:    to search customer account\n");
-	  printf("3:    exit\n");
-	  printf("\n================================\n");
 	  do{
-	       printf("\nselect what do you want to do?");
-	       ch=getche();
-	  }while(ch<='0' || ch>'3');
+	       printf("\nPlease Provide an Input\n(DONT'T Press Enter Here): ");
+	       ch = getche();													//function to take input without pressing enter
+	  }while(ch <= '0' || ch > '4');
+
 	  switch(ch){
+
 		case '1':
-			clrscr();
-			printf("\nhow many customer accounts?");
-			scanf("%d",&n);
-			for(i=0;i<n;i++){
+			printf("\nHow Many Customer Accounts You Wish To Add? ");
+			scanf("%d", &n);
+			for(i = 0; i < n; i++){
 				input();
-				if(customer.payment>0)
-					customer.acct_type=(customer.payment<0.1*customer.oldbalance)? 'O': 'D';
-				else
-					customer.acct_type=(customer.oldbalance>0)?'D' : 'C';
-				customer.newbalance=customer.oldbalance - customer.payment;
 				writefile();
-			}
-			main();
+				}
+				main();
+			break;
+
 		case '2':
-			clrscr();
-			printf("search by what?\n");
-			printf("\n1 --- search by customer number\n");
-			printf("2 --- search by customer name\n");
+			puts("\n-------------------------");
+			printf("\nPlease Choose An Input. ");
+			puts("\n------------------------");
+			printf("\n1.Enter Customer Number");
+			printf("\n2.Enter Customer Name: Case Sensitive\n");
 			search();
-			ch=getche();
 			main();
+			break;
+
 		case '3':
-			clrscr();
-			delay(700);
-			textcolor(RED);
-			gotoxy(25,25);
-			cprintf("\nA PROJECT BY BIDUR & SUJAN");
-			delay(1500);
-			exit(1);
+			printf("\nUpdate Bill\n");
+			update();
+			main();
+			break;
+
+		case '4':
+			puts("\n\n\tClosing Program:");
+			printf("\n\t");
+			i=0;
+			while(i<8){
+				printf("* ");
+				usleep(200000);
+				i++;
+			}
+			printf("\n-------------------------------------------\n");
+			printf("    A PROJECT By Aditya, Aftab, Kingshuk");
+			printf("\n-------------------------------------------\n");
+			exit(0);
 	  }
  }
 
 
    void input()
 	{
-	  FILE *fp=fopen("bidur.dat","rb");
-	  fseek (fp,0,SEEK_END);
-	  tl=ftell(fp);
-	  sl=sizeof(customer);
-	  ts=tl/sl;
-	  fseek(fp,(ts-1)*sl,SEEK_SET);
-	  fread(&customer,sizeof(customer),1,fp);
-	  printf("\ncustomer no:%d\n",++customer.number);
+	  FILE *fp = fopen("cbs.dat", "r+");
+	  fseek (fp, 0, SEEK_END);				//move file pointer at the last position of file
+	  tl = ftell(fp);						//fetch the location of pointer
+	  sl = sizeof(customer);				//fetch the size of structure
+	  ts = tl / sl;							//fetch the number of customer currently stored in database
+	  fseek(fp, (ts-1)*sl, SEEK_SET);		//sets the pointer to the last entry
+	  fread(&customer, sl, 1, fp);			//reads info from the database file
+
+	  printf("\nCustomer no:%d\n", ++customer.number);
 	  fclose(fp);
-	  printf("         Account number:");
-	  scanf("%d",&customer.acct_no);
-	  printf("\n       Name:");
-	  scanf("%s",customer.name);
-	  printf("\n       mobile no:");
-	  scanf("%f",&customer.mobile_no);
-	  printf("         Street:");
-	  scanf("%s",customer.street);
-	  printf("         City:");
-	  scanf("%s",customer.city);
-	  printf("         Previous balance:");
-	  scanf("%f",&customer.oldbalance);
-	  printf("         Current payment:");
-	  scanf("%f",&customer.payment);
-	  printf("         Payment date(mm/dd/yyyy):");
-	  scanf("%d/%d/%d",&customer.lastpayment.month,&customer.lastpayment.day,&customer.lastpayment.year);
+	  printf("Account number: %d", customer.number);
+	  customer.acc_no = customer.number;
+	  fflush(stdin);						//empty the buffer
+
+	  printf("\n       Name: ");
+	  gets(customer.name);
+	  printf("\n       Mobile no: ");
+	  scanf("%f", &customer.mobile_no);
+	  fflush(stdin);
+	  printf("         Street: ");
+	  gets(customer.street);
+	  fflush(stdin);
+	  printf("         City: ");
+	  gets(customer.city);
+	  printf("         Previous Due Balance: ");
+	  scanf("%f", &customer.newbal);
+	  int key;
+	  			payment:{
+			    puts("\n1.Purchase?\t2.Due Payment");
+			    scanf("%d",&key);
+			    if(key == 1){
+			    	fflush(stdin);
+				printf(" \n        Current Purchase Amount: ");
+				scanf("%f", &customer.payment);
+					fflush(stdin);
+				printf("\n         Purchase date(dd/mm/yyyy): ");
+				scanf("%d/%d/%d", &customer.lastpayment.day, &customer.lastpayment.month, &customer.lastpayment.year);
+							customer.newbal = customer.newbal + customer.payment;			//Updates Balance
+				}
+				else if(key==2){
+					fflush(stdin);
+					printf("Enter Payment amount:");
+					scanf("%f",&customer.payment);
+					fflush(stdin);
+					printf("\n         Payment date(dd/mm/yyyy): ");
+				scanf("%d/%d/%d", &customer.lastpayment.day, &customer.lastpayment.month, &customer.lastpayment.year);
+							customer.newbal = customer.newbal - customer.payment;
+				}
+				else{
+					fflush(stdin);
+					puts("Enter valid choice\nTry Again");
+					goto payment;
+				}
+				}
 	  return;
    }
 
    void writefile()
    {
+	  int c;
 	  FILE *fp;
-	  fp=fopen("bidur.dat","ab");
-	  fwrite(&customer,sizeof(customer),1,fp);
-	  fclose(fp);
+	  fp = fopen("cbs.dat", "ab");						//opens file in append mode
+	  fflush(stdin);									//empty the buffer
+	  c = fwrite(&customer, sizeof(customer), 1, fp);	//updates file & checks for returned value
+				  			if(c == 1)
+				  			puts("\tRecord Update SUCCEESSFULLY");
+				  			else
+				  			puts("\tRecord Update FAILED");
+	  fclose(fp);										//closes the file
+
 	  return;
    }
 
-   void search()
+void search()
    {
 	 char ch;
 	 char nam[100];
-	 int n,i,m=1;
+	 int n, i, m = 1;
 	 FILE *fp;
-	 fp=fopen("bidur.dat","rb");
+	 fp = fopen("cbs.dat", "rb");						//open file in read binary mode
+
 	 do{
-		printf("\nenter your choice:");
-		ch=getche();
-	 }while(ch!='1' && ch!='2');
+		printf("\nEnter your choice: ");
+		ch = getche();
+	 }while(ch != '1' && ch != '2');
+
 	 switch(ch){
+
 	      case '1':
-		    fseek(fp,0,SEEK_END);
-		    tl=ftell(fp);
-		    sl=sizeof(customer);
-		    ts=tl/sl;
+		    fseek(fp, 0, SEEK_END);					//sets pointer to the end of file
+		    tl = ftell(fp);
+		    sl = sizeof(customer);
+		    ts = tl / sl;
 		    do{
-			printf("\nchoose customer number:");
-			scanf("%d",&n);
-			if(n<=0 || n>ts)
-			printf("\nenter correct\n");
+			printf("\nChoose Customer Number: ");
+			scanf("%d", &n);
+			if(n <= 0 || n > ts)
+			printf("\nOpps!!! No Result Found\n");
 			else{
-			    fseek(fp,(n-1)*sl,SEEK_SET);
-			    fread(&customer,sl,1,fp);
-			    output();
+			    fseek(fp, (n-1)*sl, SEEK_SET);		//sets pointer to the inputted customer account
+			    fread(&customer, sl, 1, fp);		//reads the data from file
+			    display();
 			}
-			printf("\n\nagain?(y/n)");
-			ch=getche();
-		    }while(ch=='y');
+			printf("\n\nDo You Wish To Search Again?(y/n) ");
+			ch = getche();
+		    }while(ch == 'y');
 		    fclose(fp);
 		    break;
-	      case '2':
-		    fseek(fp,0,SEEK_END);
-		    tl=ftell(fp);
-		    sl=sizeof(customer);
-		    ts=tl/sl;
-		    fseek(fp,(ts-1)*sl,SEEK_SET);
-		    fread(&customer,sizeof(customer),1,fp);
-		    n=customer.number;
 
+		  case '2':
+		    fseek(fp, 0, SEEK_END);
+		    tl = ftell(fp);
+		    sl = sizeof(customer);
+		    ts = tl / sl;
+		    fseek(fp, (ts-1)*sl, SEEK_SET);
+		    fread(&customer, sizeof(customer), 1, fp);
+		    n = customer.number;
 		    do{
-			printf("\nenter the name:");
-			scanf("%s",nam);
-			fseek(fp,0,SEEK_SET);
-			for(i=1;i<=n;i++)
+			printf("\nEnter the name: ");
+			fflush(stdin);
+			gets(nam);
+			fseek(fp, 0, SEEK_SET);
+			for(i = 1; i <= n; i++)
 			{
-			     fread(&customer,sizeof(customer),1,fp);
-			     if(strcmp(customer.name,nam)==0)
+			     fread(&customer, sizeof(customer), 1, fp);
+			     if(strcmp(customer.name, nam) == 0)
 			     {
-				output();
-				m=0;
+				display();
+				m = 0;									//m=o, user found m!=0, user not found
 				break;
 			     }
 			}
-			if(m!=0)
-			printf("\n\ndoesn't exist\n");
-			printf("\nanother?(y/n)");
-			ch=getche();
-		    }while(ch=='y');
+			if(m != 0)
+			printf("\n\nSorry!!! DOESN'T Exist\n");
+			printf("\nDo You Wish to search Again?(y/n) ");
+			ch = getche();
+		    }while(ch == 'y');
 		    fclose(fp);
 	      }
-	      return;
+
+		  return;
 	 }
 
+void update()
+{
+	char ch;
+	int n, c;
+	FILE *fp = fopen("cbs.dat", "rb+");				//opens file in read+ binary mode
+	  fseek (fp, 0, SEEK_END);						//sets pointer to the end
+	  tl = ftell(fp);
+	  sl = sizeof(customer);
+	  ts = tl / sl;
+			do{
+			fread(&customer, ts, 1, fp);
+			printf("\nEnter customer number: ");
+			fflush(stdin);
+			scanf("%d", &n);
+			if(ts<1){								//condition to check if database have some data
+			puts("Database Empty\nAdd Customer First.");
+			main();
+		}
+			if(n <= 0 || n > ts)
+			{
+				printf("\nEnter correct\n");
+				fflush(stdin);
+				update();
+			}
+			else if(ts=0)
+			puts("Record is Empty!");
+			else{
+			    fseek(fp, (n-1)*sl, SEEK_SET);		//sets pointer to the start of desired data
+			    fread(&customer, sl, 1, fp);
+			    printf("\tName:	%s\n", customer.name);
+			    printf("\tPrevious Due Balance: %.2f\n", customer.newbal);
+			    fflush(stdin);
+			    int key;
+			    puts("\n1.Purchase\t2.Due Payment");
+			    scanf("%d",&key);
+			    if(key == 1){
+			    	fflush(stdin);
+				printf(" \n        Current Purchase Amount: ");
+				scanf("%f", &customer.payment);
+					fflush(stdin);
+				printf("\n         Purchase date(dd/mm/yyyy): ");
+				scanf("%d/%d/%d", &customer.lastpayment.day, &customer.lastpayment.month, &customer.lastpayment.year);
+							customer.newbal = customer.newbal + customer.payment;			//Updates Balance
+				}
+				else if(key==2){
+					fflush(stdin);
+					printf("Enter Payment amount:");
+					scanf("%f",&customer.payment);
+					fflush(stdin);
+					printf("\n         Payment date(dd/mm/yyyy): ");
+				scanf("%d/%d/%d", &customer.lastpayment.day, &customer.lastpayment.month, &customer.lastpayment.year);
+							customer.newbal = customer.newbal - customer.payment;
+				}
+				else{
+					puts("Enter valid choice\nTry Again");
+					return update();
+				}
 
-   void output()
+							fseek(fp, -sl, 1);
+							c = fwrite(&customer, sizeof(customer), 1, fp);
+				  			if(c == 1)
+				  			puts("\tRecord Updated SUCCEESSFULLY");
+				  			else
+				  			puts("\tRecord Update FAILED");
+				  			fclose(fp);
+				  			display();
+							main();
+						}
+						}while(n<=0 || n>ts);
+}
+
+
+   void display()
 	 {
-	   printf("\n\n    Customer no    :%d\n",customer.number);
-	   printf("    Name 	   :%s\n",customer.name);
-	   printf("    Mobile no      :%.f\n",customer.mobile_no);
-	   printf("    Account number :%d\n",customer.acct_no);
-	   printf("    Street         :%s\n",customer.street);
-	   printf("    City           :%s\n",customer.city);
-	   printf("    Old balance    :%.2f\n",customer.oldbalance);
-	   printf("    Current payment:%.2f\n",customer.payment);
-	   printf("    New balance    :%.2f\n",customer.newbalance);
-	   printf("    Payment date   :%d/%d/%d\n\n",customer.lastpayment.month,customer.lastpayment.day,customer.lastpayment.year);
-	   printf("    Account status :");
-	   textcolor(128+RED);
-	   switch(customer.acct_type)
-	      {
-	      case 'C':
-		 cprintf("CURRENT\n\n");
-		 break;
-	      case 'O':
-		 cprintf("OVERDUE\n\n");
-		 break;
-	      case 'D':
-		 cprintf("DELINQUENT\n\n");
-		 break;
-	      default:
-		 cprintf("ERROR\\n\n");
-	      }
-	      textcolor(WHITE);
-	      return;
-	   }
-
+	   printf("\n\nCustomer no : %d\n",customer.number);
+	   printf("    Name 	   : %s\n",customer.name);
+	   printf("    Mobile no      : %.f\n",customer.mobile_no);
+	   printf("    Account number : %d\n",customer.acc_no);
+	   printf("    Street         : %s\n",customer.street);
+	   printf("    City           : %s\n",customer.city);
+	   printf("    Last Payment   : %.2f\n",customer.payment);
+	   printf("    Due Balance    : %.2f\n",customer.newbal);
+	   printf("    Payment date   : %d/%d/%d\n\n",customer.lastpayment.day,customer.lastpayment.month,customer.lastpayment.year);
+		}
